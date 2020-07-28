@@ -12,4 +12,7 @@ module.exports = {
       host: process.env.HOST,
     },
   },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET,
+  },
 };

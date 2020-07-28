@@ -3,7 +3,8 @@
 // in this file.
 
 const AuthController = require("./controller/AuthController");
+const AuthControllerPolicy = require("./policies/AuthControllerPolicy");
 
 module.exports = (app) => {
-  app.post("/signup", AuthController.signup);
+  app.post("/signup", AuthControllerPolicy.signup, AuthController.signup);
 };
