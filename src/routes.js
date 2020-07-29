@@ -4,8 +4,10 @@
 
 const AuthController = require("./controller/AuthController");
 const AuthControllerPolicy = require("./policies/AuthControllerPolicy");
+const AdventuresController = require("./controller/AdventuresController");
 
 module.exports = (app) => {
   app.post("/signup", AuthControllerPolicy.signup, AuthController.signup);
   app.post("/signin", AuthController.signin);
+  app.get("/adventures", AdventuresController.index);
 };
