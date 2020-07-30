@@ -1,0 +1,9 @@
+What do you need to do?
+
+
+- setup React                                     [x]
+- setup axios                                     [x]
+- setup React-Bootstrap                           [x]
+- setup React routing                             [x]
+- setup sign UP page                              [x]
+- setup sign IN page                              [x]
