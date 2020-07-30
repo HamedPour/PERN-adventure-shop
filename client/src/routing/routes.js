@@ -1,8 +1,10 @@
 // views
 import Home from "../views/HomePage.js";
 import Page404 from "../views/Page404";
-import SignupPage from "../views/SignupPage.js";
-import SigninPage from "../views/SigninPage.js";
+import SignupPage from "../views/SignupPage";
+import SigninPage from "../views/SigninPage";
+import SignoutPage from "../views/SignoutPage";
+import Cart from "../views/Cart";
 
 export default [
   {
@@ -30,7 +32,14 @@ export default [
     path: "/cart",
     name: "cart",
     linkName: "Cart",
-    component: null,
+    component: Cart,
+    exact: true,
+  },
+  {
+    path: "/signout",
+    name: "signout",
+    linkName: "sign out",
+    component: SignoutPage,
     exact: true,
   },
   {

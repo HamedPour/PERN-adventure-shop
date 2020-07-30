@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 // routing
 import allRoutes from "../routing/routes";
@@ -22,10 +22,33 @@ const activeLink = {
 };
 
 function TopNav() {
-  const routes = allRoutes.filter((route) => {
-    // This is stupid and Vue.js would not make me have to do this!
-    return route.path !== "*";
-  });
+  const [tokenFound] = useState(false);
+
+  function resolveRoutes(routes) {
+    let result = [];
+    // if its * send it back
+    routes.forEach((route) => {
+      if (route.path === "*") {
+        return;
+      }
+      if (!tokenFound) {
+        // user has not token
+        if (route.name === "signup" || route.name === "signin") {
+          result.push(route);
+        }
+        return;
+      }
+      // user has token, remove signup and sigin
+      if (route.name === "signup" || route.name === "signin") {
+        return;
+      }
+      result.push(route);
+    });
+    return result;
+  }
+
+  const routes = resolveRoutes(allRoutes);
+
   return (
     <>
       <Nav justify="right">
