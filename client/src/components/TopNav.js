@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 // routing
 import allRoutes from "../routing/routes";
@@ -21,8 +21,16 @@ const activeLink = {
   color: "green",
 };
 
-function TopNav() {
-  const [tokenFound] = useState(false);
+function TopNav({ token }) {
+  const [tokenFound, setToken] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+      console.log("HAVE TOKEN");
+      setToken(token);
+    }
+    return () => {};
+  }, [token]);
 
   function resolveRoutes(routes) {
     let result = [];

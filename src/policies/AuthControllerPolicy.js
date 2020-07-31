@@ -14,13 +14,15 @@ module.exports = {
     if (error) {
       switch (error.details[0].context.key) {
         case "email":
-          res.status(400).send({
+          res.send({
             error: "Email is not valide",
+            errorType: "invalideEmail",
           });
           break;
         case "password":
-          res.status(400).send({
+          res.send({
             error: "Password not valide",
+            errorType: "invalidePassword",
           });
           break;
         default:

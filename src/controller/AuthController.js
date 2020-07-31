@@ -19,7 +19,16 @@ module.exports = {
       const token = jwtUtils.jwtSignAdventurer(adventurer);
       return res.json({ adventurer, token });
     } catch (err) {
-      console.error(err.message);
+      if (
+        err.message ===
+        'duplicate key value violates unique constraint "adventurer_email_key"'
+      ) {
+        return res.json({
+          error: "User Already Exists!",
+          errorType: "duplicateUser",
+        });
+      }
+      return res.json({ error: "Something went tots wrong!!" });
     }
   },
   // login

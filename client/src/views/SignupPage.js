@@ -22,13 +22,13 @@ const alertStyling = {
   position: "absolute",
 };
 
-function SignupPage() {
+function SignupPage({ callTokenHandler, setNewAdventurer }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [error, setError] = useState();
 
-  function handleSingup(e) {
+  async function handleSingup(e) {
     e.preventDefault();
     const form = document.querySelector("form");
     if (password !== confirmedPassword) {
@@ -41,12 +41,41 @@ function SignupPage() {
       form.reset();
       return;
     }
-    const adventurer = {
+    // sent user object to the backend through axios
+    const res = await AdventurerServices.signup({
       email,
       password,
-    };
-    // sent user object to the backend through axios
-    AdventurerServices.signup(adventurer);
+    });
+    if (!res.data.error) {
+      // If all goes well
+      setNewAdventurer(res.data.adventurer);
+      callTokenHandler(res.data.token);
+    } else {
+      switch (res.data.errorType) {
+        case "duplicateUser":
+          setError("Email aleady exits. Try using a different email please");
+          form.reset();
+          return;
+
+        case "invalideEmail":
+          setError("Email is invalide. Please follow email naming guidelines");
+          form.reset();
+          return;
+
+        case "invalidePassword":
+          setError(
+            "Password is invalide. Please follow password naming guidelines"
+          );
+          form.reset();
+          return;
+
+        default:
+          setError(
+            "Something stranger things went wrong!! Contact your support team!"
+          );
+          return;
+      }
+    }
   }
 
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
 //routing
@@ -14,11 +14,30 @@ const landingTitle = {
 };
 
 function App() {
+  const [token, setToken] = useState(null);
+  const [adventurer, setAdventurer] = useState(null);
+
+  function tokenHandler(aToken) {
+    setToken(aToken);
+  }
+
+  function handleNewAdventurer(data) {
+    setAdventurer(data);
+  }
+
   function RouteWithSubRoutes(route) {
     return (
       <Route
         path={route.path}
-        render={(props) => <route.component {...props} routes={route.routes} />}
+        render={(props) => (
+          <route.component
+            {...props}
+            token={token}
+            callTokenHandler={tokenHandler}
+            setNewAdventurer={handleNewAdventurer}
+            routes={route.routes}
+          />
+        )}
       />
     );
   }
@@ -26,7 +45,7 @@ function App() {
     <div className="App">
       <header>
         <h1 style={landingTitle}>Adventure Shop</h1>
-        <TopNav />
+        <TopNav token={token} />
       </header>
       <main>
         <Switch>
