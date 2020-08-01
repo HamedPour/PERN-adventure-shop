@@ -9,8 +9,9 @@ What do you need to do?
 - setup sign IN page                              [x]
 
 ## Login/Logout User
-- send sign up credentails to server              []
-- set token in localStorage                       []
+- send sign up credentails to server              [x]
+- resolve sign up server-client error handling    [x]
+- set token in localStorage                       [-] cancelled
 
 
 

@@ -10,11 +10,13 @@ module.exports = {
       const hashedPassword = await bcryptHashing.hashPassword(
         req.body.password
       );
+
       // put credentials into DB - wait for response
       const DB_signup_response = await pool.query(
         "INSERT INTO adventurer (email, password) VALUES ($1, $2) RETURNING *",
         [req.body.email, hashedPassword]
       );
+
       const adventurer = DB_signup_response.rows[0];
       const token = jwtUtils.jwtSignAdventurer(adventurer);
       return res.json({ adventurer, token });
@@ -38,10 +40,14 @@ module.exports = {
         "SELECT * FROM adventurer WHERE email=$1",
         [req.body.email]
       );
+
       if (DB_signin_response.rows.length === 0) {
         // email was not found in DB
-        return res.status(403).json({ error: "No such adventurer" });
+        return res
+          .status(403)
+          .json({ errorType: "invalidUser", message: "User does not exist" });
       }
+
       // user object
       const adventurer = DB_signin_response.rows[0];
 
@@ -56,7 +62,10 @@ module.exports = {
       );
 
       if (!passwordsMatch) {
-        return res.json({ error: "Password do not match" });
+        return res.status(403).json({
+          errorType: "invalidPassword",
+          message: "Password do not match",
+        });
       }
 
       // After password is validated - setup JWT Token for user

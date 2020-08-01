@@ -28,7 +28,7 @@ function SignupPage({ callTokenHandler, setNewAdventurer }) {
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [error, setError] = useState();
 
-  async function handleSingup(e) {
+  async function handleSignup(e) {
     e.preventDefault();
     const form = document.querySelector("form");
     if (password !== confirmedPassword) {
@@ -57,14 +57,14 @@ function SignupPage({ callTokenHandler, setNewAdventurer }) {
           form.reset();
           return;
 
-        case "invalideEmail":
-          setError("Email is invalide. Please follow email naming guidelines");
+        case "invalidEmail":
+          setError("Email is invalid. Please follow email naming guidelines");
           form.reset();
           return;
 
-        case "invalidePassword":
+        case "invalidPassword":
           setError(
-            "Password is invalide. Please follow password naming guidelines"
+            "Password is invalid. Please follow password naming guidelines"
           );
           form.reset();
           return;
@@ -92,7 +92,7 @@ function SignupPage({ callTokenHandler, setNewAdventurer }) {
           <h1 className="text-center" style={verticalSpacer}>
             Sign Up
           </h1>
-          <Form onSubmit={handleSingup}>
+          <Form onSubmit={handleSignup}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
               <Form.Control
