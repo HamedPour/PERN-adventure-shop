@@ -33,7 +33,8 @@ module.exports = {
       return res.json({ error: "Something went tots wrong!!" });
     }
   },
-  // login
+  // login ===================================================================
+  // =========================================================================
   async signin(req, res) {
     try {
       const DB_signin_response = await pool.query(
@@ -49,7 +50,7 @@ module.exports = {
       }
 
       // user object
-      const adventurer = DB_signin_response.rows[0];
+      let adventurer = DB_signin_response.rows[0];
 
       // got the user from the BD - lets now check passwords
       storedPassword = adventurer.password;
@@ -71,6 +72,10 @@ module.exports = {
       // After password is validated - setup JWT Token for user
       const token = jwtUtils.jwtSignAdventurer(adventurer);
 
+      // Tell me if there is a good reason to send the hash password back
+      // to the client as a confirmation. ??? we're already sending the token
+      const { id, email } = adventurer;
+      adventurer = { id, email };
       res.json({
         adventurer,
         token,

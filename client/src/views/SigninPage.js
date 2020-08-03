@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 // react-bootstrap
 import Container from "react-bootstrap/Container";
@@ -23,9 +24,14 @@ const alertStyling = {
 };
 
 function SigninPage({ callTokenHandler, setNewAdventurer }) {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState();
+
+  function navigateToAdventures() {
+    history.push("/adventures");
+  }
 
   async function handleSignIn(e) {
     e.preventDefault();
@@ -42,16 +48,29 @@ function SigninPage({ callTokenHandler, setNewAdventurer }) {
         email,
         password,
       });
-      console.log("SWEEET!", res);
-    } catch (error) {
-      console.log("Fuck you Server");
-      console.log(error);
+      setNewAdventurer(res.data.adventurer);
+      callTokenHandler(res.data.token);
+      return navigateToAdventures();
+    } catch (err) {
+      switch (err.errorType) {
+        case "invalidUser":
+          setError("No such email address exists. Maybe sign it up?");
+          form.reset();
+          return;
+        case "invalidPassword":
+          setError(
+            "You password is wrong. I'd normall not tell this Mr Hacker"
+          );
+          form.reset();
+          return;
+        default:
+          setError(
+            "Something went really wrong. Contact tech support! Tell them to send Bob"
+          );
+          form.reset();
+          return;
+      }
     }
-    // if (!res.data.error) {
-    // If all goes well
-    // setNewAdventurer(res.data.adventurer);
-    // callTokenHandler(res.data.token);
-    // }
   }
 
   return (
@@ -68,8 +87,6 @@ function SigninPage({ callTokenHandler, setNewAdventurer }) {
           <h1 className="text-center" style={verticalSpacer}>
             Sign In
           </h1>
-          <h3>test@test.com</h3>
-          <h4>111111111</h4>
           <Form onSubmit={handleSignIn}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
