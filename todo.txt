@@ -13,6 +13,9 @@ What do you need to do?
 - resolve sign up server-client error handling    [x]
 - set token in localStorage                       [-] cancelled
 
+## Route protection ServerSide
+- setup passport to work with JWT                 [x]
+- setup authorisation middleware                  [x]
 
 
 ## Show adventure products on client side

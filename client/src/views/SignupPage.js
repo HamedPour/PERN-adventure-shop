@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 // react-bootstrap
 import Container from "react-bootstrap/Container";
@@ -7,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+import Modal from "react-bootstrap/Modal";
 
 // Axois - Adventurer Services
 import AdventurerServices from "../services/AdventurerServices";
@@ -22,11 +24,21 @@ const alertStyling = {
   position: "absolute",
 };
 
-function SignupPage({ callTokenHandler, setNewAdventurer }) {
+function SignupPage() {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [error, setError] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  function successfulRedirect() {
+    setShowModal(true);
+    setTimeout(() => {
+      setShowModal(false);
+      history.push("/signin");
+    }, 2000);
+  }
 
   async function handleSignup(e) {
     e.preventDefault();
@@ -42,29 +54,28 @@ function SignupPage({ callTokenHandler, setNewAdventurer }) {
       return;
     }
     // sent user object to the backend through axios
-    const res = await AdventurerServices.signup({
-      email,
-      password,
-    });
-    if (!res.data.error) {
-      // If all goes well
-      setNewAdventurer(res.data.adventurer);
-      callTokenHandler(res.data.token);
-    } else {
-      switch (res.data.errorType) {
+    try {
+      await AdventurerServices.signup({
+        email,
+        password,
+      });
+      // If all goes well, give success message and redirect to login
+      return successfulRedirect();
+    } catch (err) {
+      switch (err.message) {
         case "duplicateUser":
-          setError("Email aleady exits. Try using a different email please");
+          setError("Email aleady exits. Try using a different email please.");
           form.reset();
           return;
 
         case "invalidEmail":
-          setError("Email is invalid. Please follow email naming guidelines");
+          setError("Email is invalid. Please follow email naming guidelines.");
           form.reset();
           return;
 
         case "invalidPassword":
           setError(
-            "Password is invalid. Please follow password naming guidelines"
+            "Password is invalid. Please follow password naming guidelines."
           );
           form.reset();
           return;
@@ -73,6 +84,8 @@ function SignupPage({ callTokenHandler, setNewAdventurer }) {
           setError(
             "Something stranger things went wrong!! Contact your support team!"
           );
+          form.reset();
+          console.error(err);
           return;
       }
     }
@@ -92,6 +105,21 @@ function SignupPage({ callTokenHandler, setNewAdventurer }) {
           <h1 className="text-center" style={verticalSpacer}>
             Sign Up
           </h1>
+
+          <h1 className="text-center" style={verticalSpacer}>
+            12345678
+          </h1>
+          <Modal show={showModal} backdrop="static" keyboard={false}>
+            <Modal.Body>
+              <div
+                className="display-4 text-center p-4"
+                style={{ color: "green" }}
+              >
+                Brilliant! You were signed up successfull!
+              </div>
+            </Modal.Body>
+          </Modal>
+
           <Form onSubmit={handleSignup}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>

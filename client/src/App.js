@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Switch, Route, Link } from "react-router-dom";
 
 //routing
 import routes from "./routing/routes";
@@ -11,11 +11,19 @@ const landingTitle = {
   textAlign: "center",
   fontWeight: "300",
   margin: "10px 0",
+  listStyle: "none",
 };
 
 function App() {
   const [token, setToken] = useState(null);
   const [adventurer, setAdventurer] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
   function tokenHandler(aToken) {
     setToken(aToken);
@@ -44,7 +52,15 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1 style={landingTitle}>Adventure Shop</h1>
+        <h1 style={landingTitle}>
+          <Link
+            to="/"
+            style={{ color: "inherit", textDecoration: "none" }}
+            as="div"
+          >
+            Adventure Shop
+          </Link>
+        </h1>
         <TopNav token={token} />
       </header>
       <main>

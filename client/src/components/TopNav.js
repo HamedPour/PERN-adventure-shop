@@ -26,8 +26,9 @@ function TopNav({ token }) {
 
   useEffect(() => {
     if (token) {
-      console.log("HAVE TOKEN");
       setToken(token);
+    } else {
+      setToken(false);
     }
     return () => {};
   }, [token]);
@@ -36,7 +37,7 @@ function TopNav({ token }) {
     let result = [];
     // if its * send it back
     routes.forEach((route) => {
-      if (route.path === "*") {
+      if (route.path === "*" || route.name === "home") {
         return;
       }
       if (!tokenFound) {

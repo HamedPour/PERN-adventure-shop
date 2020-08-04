@@ -1,5 +1,6 @@
 // views
 import Home from "../views/HomePage.js";
+import Adventures from "../views/Adventures.js";
 import Page404 from "../views/Page404";
 import SignupPage from "../views/SignupPage";
 import SigninPage from "../views/SigninPage";
@@ -9,9 +10,16 @@ import Cart from "../views/Cart";
 export default [
   {
     path: "/",
+    name: "home",
+    linkName: "home",
+    component: Home,
+    exact: true,
+  },
+  {
+    path: "/adventures",
     name: "adventures",
     linkName: "adventures",
-    component: Home,
+    component: Adventures,
     exact: true,
   },
   {
@@ -33,6 +41,7 @@ export default [
     name: "cart",
     linkName: "Cart",
     component: Cart,
+    protected: true,
     exact: true,
   },
   {

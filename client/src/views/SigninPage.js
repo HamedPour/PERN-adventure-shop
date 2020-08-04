@@ -33,6 +33,10 @@ function SigninPage({ callTokenHandler, setNewAdventurer }) {
     history.push("/adventures");
   }
 
+  function storeTokenInLocalStorage(aToken) {
+    localStorage.setItem("token", aToken);
+  }
+
   async function handleSignIn(e) {
     e.preventDefault();
     const form = document.querySelector("form");
@@ -50,9 +54,10 @@ function SigninPage({ callTokenHandler, setNewAdventurer }) {
       });
       setNewAdventurer(res.data.adventurer);
       callTokenHandler(res.data.token);
+      storeTokenInLocalStorage(res.data.token);
       return navigateToAdventures();
     } catch (err) {
-      switch (err.errorType) {
+      switch (err.message) {
         case "invalidUser":
           setError("No such email address exists. Maybe sign it up?");
           form.reset();
@@ -68,6 +73,7 @@ function SigninPage({ callTokenHandler, setNewAdventurer }) {
             "Something went really wrong. Contact tech support! Tell them to send Bob"
           );
           form.reset();
+          console.error(err.message);
           return;
       }
     }
@@ -87,6 +93,8 @@ function SigninPage({ callTokenHandler, setNewAdventurer }) {
           <h1 className="text-center" style={verticalSpacer}>
             Sign In
           </h1>
+          <h1 className="text-center">test@test.com</h1>
+          <h1 className="text-center">12345678</h1>
           <Form onSubmit={handleSignIn}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
