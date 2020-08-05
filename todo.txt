@@ -19,6 +19,11 @@ What do you need to do?
 
 
 ## Show adventure products on client side
-- adventure page index services                   []
-- pull adventures from DB to homepage             []
+- adventure page index services                   [x]
+- pull adventures from DB to homepage             [x]
+- style adventure cards                           [x] 
 
+## Setup Cart
+- setup cart page layout                          []
+- style cart page                                 []
+- connect embark to cart                          []

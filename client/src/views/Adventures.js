@@ -1,10 +1,74 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+// Axois
+import AdventureServices from "../services/AdventureServices";
+
+// Bootstap
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+
+// custom styling
+const priceStyle = {
+  fontSize: "1.3rem",
+  minWidth: "100px",
+};
 
 function Adventures() {
+  const [adventures, setAdventures] = useState([]);
+
+  async function getAdventures() {
+    const adventureList = await AdventureServices.index();
+    setAdventures(adventureList.data);
+  }
+
+  useEffect(() => {
+    getAdventures();
+  }, []);
+
   return (
-    <div>
-      <h1>Got loads of great Adventures</h1>
-    </div>
+    <Container>
+      <Row>
+        {adventures.map((adventure) => {
+          return (
+            <Col
+              key={adventure.id}
+              xs={{ span: 10, offset: 1 }}
+              md={{ span: 6, offset: 0 }}
+            >
+              <Card className="m-4 p-4">
+                <Card.Img
+                  variant="top"
+                  src={
+                    process.env.PUBLIC_URL + "/images/" + adventure.id + ".jpg"
+                  }
+                />
+                <Card.Body>
+                  <Card.Title className="text-center text-uppercase">
+                    {adventure.name}
+                  </Card.Title>
+                  <Card.Text className="text-justify">
+                    {adventure.description}
+                  </Card.Text>
+                  <Row className="mt-4">
+                    <Col md={{ span: 4, offset: 0 }}>
+                      <Button variant="primary">Embark</Button>
+                    </Col>
+                    <Col md={{ span: 4, offset: 4 }}>
+                      <div style={priceStyle} className="text-align-right">
+                        <span>£{adventure.price},000</span>
+                      </div>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
+    </Container>
   );
 }
 
