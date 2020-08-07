@@ -8,6 +8,7 @@ const app = express();
 //  my config imports
 const config = require("./config/config");
 
+// usual suspects
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());

@@ -14,5 +14,6 @@ module.exports = {
   },
   authentication: {
     jwtSecret: process.env.JWT_SECRET,
+    sessionSecret: process.env.SESSION_SECRET,
   },
 };

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 // routing
 import allRoutes from "../routing/routes";
 
 // react-bootstrap
 import Nav from "react-bootstrap/Nav";
+
+// Redux
+import { useSelector } from "react-redux";
 
 const navIcons = {
   width: "20px",
@@ -21,18 +24,21 @@ const activeLink = {
   color: "green",
 };
 
-function TopNav({ token }) {
-  const [tokenFound, setToken] = useState(false);
+const cartBadge = {
+  backgroundColor: "#0275d8",
+  position: "relative",
+  fontSize: "0.8rem",
+  fontWeight: "bold",
+  bottom: "10px",
+  right: "1px",
+  padding: "2px 8px",
+  borderRadius: "50%",
+  color: "#fff",
+};
 
-  useEffect(() => {
-    if (token) {
-      setToken(token);
-    } else {
-      setToken(false);
-    }
-    return () => {};
-  }, [token]);
-
+function TopNav() {
+  const totalQty = useSelector((state) => state.cart.totalQty);
+  const isLogged = useSelector((state) => state.isLogged);
   function resolveRoutes(routes) {
     let result = [];
     // if its * send it back
@@ -40,7 +46,7 @@ function TopNav({ token }) {
       if (route.path === "*" || route.name === "home") {
         return;
       }
-      if (!tokenFound) {
+      if (!isLogged) {
         // user has not token
         if (route.name === "signup" || route.name === "signin") {
           result.push(route);
@@ -79,6 +85,9 @@ function TopNav({ token }) {
                     }
                   />
                   {route.linkName.toUpperCase()}
+                  {route.linkName === "Cart" ? (
+                    <span style={cartBadge}>{totalQty}</span>
+                  ) : null}
                 </Nav.Link>
               </NavLink>
             </Nav.Item>

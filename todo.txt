@@ -17,13 +17,23 @@ What do you need to do?
 - setup passport to work with JWT                 [x]
 - setup authorisation middleware                  [x]
 
-
 ## Show adventure products on client side
 - adventure page index services                   [x]
 - pull adventures from DB to homepage             [x]
 - style adventure cards                           [x] 
 
+## Sessions and Passport integration
+- setup expres-sessions                           [-] cancelled
+- fix passport config                             [-] cancelled
+- integration with passport                       [-] cancelled
+
+#### -------------------> Redux <-------------------
+- ripe up the entire application and restructure
+  for redux use.                                  []
+
 ## Setup Cart
 - setup cart page layout                          []
 - style cart page                                 []
 - connect embark to cart                          []
+- create cart object (cart class)                 []
+- 

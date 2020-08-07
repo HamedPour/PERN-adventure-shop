@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 // Axois
 import AdventureServices from "../services/AdventureServices";
 
+// Redux
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/actions/cartAction";
+
 // Bootstap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -17,11 +21,16 @@ const priceStyle = {
 };
 
 function Adventures() {
+  const dispatch = useDispatch();
   const [adventures, setAdventures] = useState([]);
 
   async function getAdventures() {
     const adventureList = await AdventureServices.index();
     setAdventures(adventureList.data);
+  }
+
+  function handleEmbarkClick(adventure) {
+    dispatch(addToCart(adventure));
   }
 
   useEffect(() => {
@@ -54,7 +63,12 @@ function Adventures() {
                   </Card.Text>
                   <Row className="mt-4">
                     <Col md={{ span: 4, offset: 0 }}>
-                      <Button variant="primary">Embark</Button>
+                      <Button
+                        onClick={() => handleEmbarkClick(adventure)}
+                        variant="primary"
+                      >
+                        Embark
+                      </Button>
                     </Col>
                     <Col md={{ span: 4, offset: 4 }}>
                       <div style={priceStyle} className="text-align-right">

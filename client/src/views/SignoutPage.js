@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-function SignoutPage({ callTokenHandler }) {
+// redux
+import { useDispatch } from "react-redux";
+import { removeToken } from "../store/actions/tokenAction";
+import { signout } from "../store/actions/isLoggedAction";
+
+function SignoutPage() {
+  const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
     localStorage.removeItem("token");
-    callTokenHandler(null);
+    dispatch(signout());
+    dispatch(removeToken());
     history.push("/signin");
-  }, [callTokenHandler, history]);
+  }, [history, dispatch]);
 
   return <div>Sign out sucessfully</div>;
 }

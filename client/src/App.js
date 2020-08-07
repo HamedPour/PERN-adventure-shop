@@ -15,30 +15,11 @@ const landingTitle = {
 };
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [adventurer, setAdventurer] = useState(null);
-
-  function tokenHandler(aToken) {
-    setToken(aToken);
-  }
-
-  function handleNewAdventurer(data) {
-    setAdventurer(data);
-  }
-
   function RouteWithSubRoutes(route) {
     return (
       <Route
         path={route.path}
-        render={(props) => (
-          <route.component
-            {...props}
-            token={token}
-            callTokenHandler={tokenHandler}
-            setNewAdventurer={handleNewAdventurer}
-            routes={route.routes}
-          />
-        )}
+        render={(props) => <route.component {...props} routes={route.routes} />}
       />
     );
   }
@@ -54,7 +35,7 @@ function App() {
             Adventure Shop
           </Link>
         </h1>
-        <TopNav token={token} />
+        <TopNav />
       </header>
       <main>
         <Switch>

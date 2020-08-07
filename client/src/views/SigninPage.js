@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
+// Redux
+import { useDispatch } from "react-redux";
+import { signin } from "../store/actions/isLoggedAction";
+import { setToken } from "../store/actions/tokenAction";
+
 // react-bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -23,7 +28,8 @@ const alertStyling = {
   position: "absolute",
 };
 
-function SigninPage({ callTokenHandler, setNewAdventurer }) {
+function SigninPage() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,8 +58,9 @@ function SigninPage({ callTokenHandler, setNewAdventurer }) {
         email,
         password,
       });
-      setNewAdventurer(res.data.adventurer);
-      callTokenHandler(res.data.token);
+      // ALL GOOD - SETUP TOKEN AND USER
+      dispatch(signin()); // this sets isLogged -> true
+      dispatch(setToken(res.data.token));
       storeTokenInLocalStorage(res.data.token);
       return navigateToAdventures();
     } catch (err) {
