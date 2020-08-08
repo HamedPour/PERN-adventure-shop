@@ -4,3 +4,16 @@ export const addToCart = (anAdventure) => {
     payload: anAdventure,
   };
 };
+
+export const deleteCart = () => {
+  return {
+    type: "DELETE_CART",
+  };
+};
+
+export const setCart = (aCart) => {
+  return {
+    type: "SET_CART",
+    payload: aCart,
+  };
+};

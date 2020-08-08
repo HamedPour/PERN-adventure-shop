@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signin } from "../store/actions/isLoggedAction";
 import { setToken } from "../store/actions/tokenAction";
+import { setUser } from "../store/actions/userAction";
 
 // react-bootstrap
 import Container from "react-bootstrap/Container";
@@ -61,6 +62,7 @@ function SigninPage() {
       // ALL GOOD - SETUP TOKEN AND USER
       dispatch(signin()); // this sets isLogged -> true
       dispatch(setToken(res.data.token));
+      dispatch(setUser(res.data.adventurer));
       storeTokenInLocalStorage(res.data.token);
       return navigateToAdventures();
     } catch (err) {
@@ -71,7 +73,7 @@ function SigninPage() {
           return;
         case "invalidPassword":
           setError(
-            "You password is wrong. I'd normall not tell this Mr Hacker"
+            "You password is wrong. I'd normall not tell you this Mr Hacker"
           );
           form.reset();
           return;

@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 
 //routing
 import routes from "./routing/routes";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { deleteCart } from "./store/actions/cartAction";
+import { setCart } from "./store/actions/cartAction";
 
 // componenets
 import TopNav from "./components/TopNav";
@@ -15,6 +20,25 @@ const landingTitle = {
 };
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    checkCartDateValidity();
+  }, []);
+
+  function checkCartDateValidity() {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    if (!cart) return;
+    const { expires } = cart;
+    if (expires < Date.now()) {
+      // time has expired
+      localStorage.removeItem("cart");
+      return dispatch(deleteCart());
+    }
+    // All good - load cart from localstorage
+    dispatch(setCart(cart));
+  }
+
   function RouteWithSubRoutes(route) {
     return (
       <Route

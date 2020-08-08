@@ -85,7 +85,7 @@ function TopNav() {
                     }
                   />
                   {route.linkName.toUpperCase()}
-                  {route.linkName === "Cart" ? (
+                  {route.linkName === "Cart" && totalQty > 0 ? (
                     <span style={cartBadge}>{totalQty}</span>
                   ) : null}
                 </Nav.Link>
