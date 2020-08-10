@@ -17,3 +17,10 @@ export const setCart = (aCart) => {
     payload: aCart,
   };
 };
+
+export const removeFromCart = (anItem) => {
+  return {
+    type: "REMOVE_FROM_CART",
+    payload: anItem,
+  };
+};

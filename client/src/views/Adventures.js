@@ -72,7 +72,7 @@ function Adventures() {
                     </Col>
                     <Col md={{ span: 4, offset: 4 }}>
                       <div style={priceStyle} className="text-align-right">
-                        <span>£{adventure.price},000</span>
+                        <span>£{adventure.price.toLocaleString()}</span>
                       </div>
                     </Col>
                   </Row>

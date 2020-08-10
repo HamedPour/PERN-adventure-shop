@@ -14,19 +14,38 @@ function getExpirationTime() {
 const cartReducer = (state = initState, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
-      // WAIT!! WAIT ONE DAMN MIN - how badly are we mutating things!??
-      const oldCart = Object.assign(state, {});
-      oldCart.totalQty++;
-      oldCart.totalPrice += action.payload.price;
-      oldCart.items.push(action.payload);
+      let flag = true;
 
-      // save cart & user in localStorage - add timestamp
-      const cartToStorage = { ...oldCart, expires: getExpirationTime() };
-      localStorage.setItem("cart", JSON.stringify(cartToStorage));
-      return (state = oldCart);
+      state.items.forEach((item) => {
+        if (item.id === action.payload.id) {
+          // No duplicate adventures allowed
+          flag = false;
+        }
+      });
+
+      if (flag) {
+        const newCart = { ...state };
+        newCart.totalQty++;
+        newCart.totalPrice += action.payload.price;
+        newCart.items.push(action.payload);
+        // save cart in localStorage - add timestamp
+        newCart.expires = getExpirationTime();
+        localStorage.setItem("cart", JSON.stringify(newCart));
+        return (state = newCart);
+      }
+      return state;
 
     case "REMOVE_FROM_CART":
-      return state;
+      const newCart = { ...state };
+      newCart.totalQty--;
+      newCart.totalPrice -= action.payload.price;
+      newCart.items = newCart.items.filter((item) => {
+        return item.id !== action.payload.id;
+      });
+      // save cart in localStorage - add timestamp
+      newCart.expires = getExpirationTime();
+      localStorage.setItem("cart", JSON.stringify(newCart));
+      return (state = newCart);
 
     case "DELETE_CART":
       return (state = initState);

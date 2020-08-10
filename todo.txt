@@ -29,11 +29,11 @@ What do you need to do?
 
 #### -------------------> Redux <-------------------
 - ripe up the entire application and restructure
-  for redux use.                                  []
+  for redux use.                                  [x]
 
 ## Setup Cart
-- setup cart page layout                          []
-- style cart page                                 []
-- connect embark to cart                          []
-- create cart object (cart class)                 []
-- 
+- setup cart page layout                          [x]
+- style cart page                                 [x]
+- connect embark to cart                          [x]
+- create cart related Redux components            [x]
+- Associate User with Cart in localStorage        []
