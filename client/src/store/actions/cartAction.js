@@ -1,7 +1,7 @@
-export const addToCart = (anAdventure) => {
+export const addToCart = (anAdventure, anAdventurer) => {
   return {
     type: "ADD_TO_CART",
-    payload: anAdventure,
+    payload: { adventure: anAdventure, adventurer: anAdventurer },
   };
 };
 

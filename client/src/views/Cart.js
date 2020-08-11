@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 // Redux
 import { useDispatch } from "react-redux";
@@ -12,39 +12,6 @@ import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
-// styles
-const imageStyle = {
-  maxWidth: "100px",
-  padding: "10px",
-};
-
-const cartContainer = {
-  display: "flex",
-  border: "1px solid lightblue",
-};
-
-const spacer = {
-  flex: "1",
-};
-
-const btnContainer = {
-  margin: "20px",
-};
-
-const titleStyle = {
-  fontWeight: "400",
-  fontSize: "1.5rem",
-};
-
-const priceStyle = {
-  fontWeight: "300",
-  fontSize: "1.2rem",
-};
-
-const totalStyle = {
-  fontSize: "1.5rem",
-};
-
 function mapStateToProps(state) {
   const items = state.cart.items;
   let totalPrice = state.cart.totalPrice;
@@ -56,6 +23,39 @@ function mapStateToProps(state) {
 
 function Cart({ items, totalPrice }) {
   const dispatch = useDispatch();
+  const [hasUserPayed, setHasUserPayed] = useState(false);
+
+  let paypalRef = useRef();
+
+  const product = {
+    price: 77.77,
+    description: "Cool Chair",
+  };
+
+  useEffect(() => {
+    window.paypal
+      .Buttons({
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                description: product.description,
+                amount: {
+                  currency_code: "USD",
+                  value: product.price,
+                },
+              },
+            ],
+          });
+        },
+        onApprove: async (data, actions) => {
+          const order = await actions.order.capture();
+          setHasUserPayed(true);
+          console.log(order);
+        },
+      })
+      .render(paypalRef);
+  }, []);
 
   function removeItemFromCart(id, price) {
     dispatch(removeFromCart({ id, price }));
@@ -99,6 +99,10 @@ function Cart({ items, totalPrice }) {
                     }
                     variant="danger"
                   >
+                    <img
+                      style={trashIconStyle}
+                      src={process.env.PUBLIC_URL + `/images/icons/trash.png`}
+                    />{" "}
                     Remove
                   </Button>
                 </div>
@@ -119,7 +123,7 @@ function Cart({ items, totalPrice }) {
               Grand Total: £{totalPrice.toLocaleString()}
             </span>
           </Alert>
-          <Button size="lg">Checkout</Button>
+          <div style={paypayBtnStyle} ref={(v) => (paypalRef = v)} />
         </Col>
       </Row>
     </Container>
@@ -127,3 +131,45 @@ function Cart({ items, totalPrice }) {
 }
 
 export default connect(mapStateToProps)(Cart);
+
+// styles
+const imageStyle = {
+  maxWidth: "100px",
+  padding: "10px",
+};
+
+const cartContainer = {
+  display: "flex",
+  border: "1px solid lightblue",
+};
+
+const spacer = {
+  flex: "1",
+};
+
+const btnContainer = {
+  margin: "20px",
+};
+
+const titleStyle = {
+  fontWeight: "400",
+  fontSize: "1.5rem",
+};
+
+const priceStyle = {
+  fontWeight: "300",
+  fontSize: "1.2rem",
+};
+
+const totalStyle = {
+  fontSize: "1.5rem",
+};
+
+const trashIconStyle = {
+  maxWidth: "24px",
+};
+
+const paypayBtnStyle = {
+  width: "50%",
+  margin: "0 auto",
+};

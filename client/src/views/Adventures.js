@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import AdventureServices from "../services/AdventureServices";
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/actions/cartAction";
 
 // Bootstap
@@ -22,6 +22,7 @@ const priceStyle = {
 
 function Adventures() {
   const dispatch = useDispatch();
+  const adventurer = useSelector((state) => state.adventurer);
   const [adventures, setAdventures] = useState([]);
 
   async function getAdventures() {
@@ -30,7 +31,9 @@ function Adventures() {
   }
 
   function handleEmbarkClick(adventure) {
-    dispatch(addToCart(adventure));
+    // send the adventure and the user(adventurer) to actions
+    // Note, adventurer might be an empty obj allow it to pass
+    dispatch(addToCart(adventure, adventurer));
   }
 
   useEffect(() => {

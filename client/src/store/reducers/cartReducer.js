@@ -17,7 +17,7 @@ const cartReducer = (state = initState, action) => {
       let flag = true;
 
       state.items.forEach((item) => {
-        if (item.id === action.payload.id) {
+        if (item.id === action.payload.adventure.id) {
           // No duplicate adventures allowed
           flag = false;
         }
@@ -26,8 +26,9 @@ const cartReducer = (state = initState, action) => {
       if (flag) {
         const newCart = { ...state };
         newCart.totalQty++;
-        newCart.totalPrice += action.payload.price;
-        newCart.items.push(action.payload);
+        newCart.totalPrice += action.payload.adventure.price;
+        newCart.items.push(action.payload.adventure);
+        newCart.adventurer = action.payload.adventurer;
         // save cart in localStorage - add timestamp
         newCart.expires = getExpirationTime();
         localStorage.setItem("cart", JSON.stringify(newCart));
