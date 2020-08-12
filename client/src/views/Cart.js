@@ -51,14 +51,18 @@ function Cart({ items, totalPrice }) {
           const order = await actions.order.capture();
           history.push({
             pathname: "cart/payment-result",
-            state: { message: "Successful Payment", order },
+            state: { message: "Success", result: "SUCCESS", order },
           });
         },
         onError: (err) => {
           console.log("WTF", err);
           history.push({
             pathname: "cart/payment-result",
-            state: { message: "An Error has occured!", err },
+            state: {
+              message: "An Error has occured! Please Contact Bob",
+              result: "ERROR",
+              err,
+            },
           });
         },
       })

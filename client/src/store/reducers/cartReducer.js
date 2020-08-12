@@ -49,6 +49,7 @@ const cartReducer = (state = initState, action) => {
       return (state = newCart);
 
     case "DELETE_CART":
+      localStorage.removeItem("cart");
       return (state = initState);
 
     case "SET_CART":
