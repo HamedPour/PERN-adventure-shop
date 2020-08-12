@@ -5,16 +5,20 @@ import { useDispatch } from "react-redux";
 import { removeFromCart } from "../store/actions/cartAction";
 import { connect } from "react-redux";
 
+// Router
+import { useHistory } from "react-router-dom";
+
 // Bootstap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 
 function mapStateToProps(state) {
   const items = state.cart.items;
-  let totalPrice = state.cart.totalPrice;
+  let totalPrice = state.cart.totalPrice / 10000;
   return {
     items,
     totalPrice,
@@ -22,15 +26,11 @@ function mapStateToProps(state) {
 }
 
 function Cart({ items, totalPrice }) {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const [hasUserPayed, setHasUserPayed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   let paypalRef = useRef();
-
-  const product = {
-    price: 77.77,
-    description: "Cool Chair",
-  };
 
   useEffect(() => {
     window.paypal
@@ -39,19 +39,27 @@ function Cart({ items, totalPrice }) {
           return actions.order.create({
             purchase_units: [
               {
-                description: product.description,
                 amount: {
-                  currency_code: "USD",
-                  value: product.price,
+                  value: totalPrice,
                 },
               },
             ],
           });
         },
         onApprove: async (data, actions) => {
+          setIsLoading(true);
           const order = await actions.order.capture();
-          setHasUserPayed(true);
-          console.log(order);
+          history.push({
+            pathname: "cart/payment-result",
+            state: { message: "Successful Payment", order },
+          });
+        },
+        onError: (err) => {
+          console.log("WTF", err);
+          history.push({
+            pathname: "cart/payment-result",
+            state: { message: "An Error has occured!", err },
+          });
         },
       })
       .render(paypalRef);
@@ -68,7 +76,16 @@ function Cart({ items, totalPrice }) {
           <h1 className="display-4 m-4 text-center">Shopping Cart</h1>
         </Col>
       </Row>
-      <Row className="mt-4">
+      <Row hidden={!isLoading}>
+        <Col>
+          <div style={spinnerContainer}>
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
+        </Col>
+      </Row>
+      <Row hidden={isLoading} className="mt-4">
         {items.map((adventure) => {
           return (
             <Col
@@ -111,7 +128,7 @@ function Cart({ items, totalPrice }) {
           );
         })}
       </Row>
-      <Row>
+      <Row hidden={isLoading}>
         <Col
           className="text-center"
           xs={{ span: 12, offset: 0 }}
@@ -120,10 +137,25 @@ function Cart({ items, totalPrice }) {
           <hr />
           <Alert variant="info">
             <span style={totalStyle}>
-              Grand Total: £{totalPrice.toLocaleString()}
+              Grand Total: £{totalPrice.toLocaleString()}*
             </span>
+            <br />
+            <small>
+              * super special discount coz you need an adventure in your life
+            </small>
           </Alert>
+          <div style={headline}>Payment Methods</div>
           <div style={paypayBtnStyle} ref={(v) => (paypalRef = v)} />
+        </Col>
+      </Row>
+      <Row hidden={!isLoading}>
+        <Col
+          className="text-center"
+          style={headline}
+          xs={{ span: 12, offset: 0 }}
+          md={{ span: 6, offset: 3 }}
+        >
+          <Alert variant="info">Proccessing! Please Stand by ...</Alert>
         </Col>
       </Row>
     </Container>
@@ -162,7 +194,7 @@ const priceStyle = {
 };
 
 const totalStyle = {
-  fontSize: "1.5rem",
+  fontSize: "2rem",
 };
 
 const trashIconStyle = {
@@ -172,4 +204,15 @@ const trashIconStyle = {
 const paypayBtnStyle = {
   width: "50%",
   margin: "0 auto",
+};
+
+const spinnerContainer = {
+  display: "flex",
+  height: "50vh",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const headline = {
+  fontSize: "1.5rem",
 };

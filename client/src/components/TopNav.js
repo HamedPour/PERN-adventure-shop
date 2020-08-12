@@ -41,13 +41,14 @@ function TopNav() {
   const isLogged = useSelector((state) => state.isLogged);
   function resolveRoutes(routes) {
     let result = [];
-    // if its * send it back
+
     routes.forEach((route) => {
-      if (route.path === "*" || route.name === "home") {
+      // yes I know I could have done this better, but time was a factor
+      if (route.invisible) {
         return;
       }
       if (!isLogged) {
-        // user has not token
+        // user has no token
         if (route.name === "signup" || route.name === "signin") {
           result.push(route);
         }

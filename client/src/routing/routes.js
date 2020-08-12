@@ -6,6 +6,7 @@ import SignupPage from "../views/SignupPage";
 import SigninPage from "../views/SigninPage";
 import SignoutPage from "../views/SignoutPage";
 import Cart from "../views/Cart";
+import PaymentResult from "../views/PaymentResult";
 
 export default [
   {
@@ -13,6 +14,7 @@ export default [
     name: "home",
     linkName: "home",
     component: Home,
+    invisible: true,
     exact: true,
   },
   {
@@ -20,6 +22,7 @@ export default [
     name: "adventures",
     linkName: "adventures",
     component: Adventures,
+    invisible: false,
     exact: true,
   },
   {
@@ -27,6 +30,7 @@ export default [
     name: "signup",
     linkName: "sign up",
     component: SignupPage,
+    invisible: false,
     exact: true,
   },
   {
@@ -34,6 +38,7 @@ export default [
     name: "signin",
     linkName: "sign in",
     component: SigninPage,
+    invisible: false,
     exact: true,
   },
   {
@@ -42,6 +47,15 @@ export default [
     linkName: "Cart",
     component: Cart,
     protected: true,
+    invisible: false,
+    exact: true,
+  },
+  {
+    path: "/cart/payment-result",
+    name: "paymentresult",
+    linkName: "payment result",
+    component: PaymentResult,
+    invisible: true,
     exact: true,
   },
   {
@@ -49,10 +63,12 @@ export default [
     name: "signout",
     linkName: "sign out",
     component: SignoutPage,
+    invisible: false,
     exact: true,
   },
   {
     path: "*",
+    invisible: true,
     component: Page404,
   },
 ];
