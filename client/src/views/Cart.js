@@ -122,6 +122,7 @@ function Cart({ items, totalPrice }) {
                   >
                     <img
                       style={trashIconStyle}
+                      alt="bin icon"
                       src={process.env.PUBLIC_URL + `/images/icons/trash.png`}
                     />{" "}
                     Remove

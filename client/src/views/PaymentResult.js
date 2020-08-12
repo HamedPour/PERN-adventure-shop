@@ -10,7 +10,6 @@ import { deleteCart } from "../store/actions/cartAction";
 
 function PaymentResult(props) {
   const dispatch = useDispatch();
-  console.log(props.location.state);
 
   useEffect(() => {
     dispatch(deleteCart());
@@ -28,6 +27,7 @@ function PaymentResult(props) {
         <h2>Off to adventure for you! Dont forget to take your hat!</h2>
         <img
           style={imageContainer}
+          alt="Indiana Jones hat"
           src={process.env.PUBLIC_URL + "/images/hat.png"}
         />
         <Button size="lg">HOME</Button>

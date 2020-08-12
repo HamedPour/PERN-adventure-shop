@@ -23,10 +23,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    checkCartDateValidity();
-  }, []);
-
-  function checkCartDateValidity() {
     const cart = JSON.parse(localStorage.getItem("cart"));
     if (!cart) return;
     const { expires } = cart;
@@ -37,7 +33,7 @@ function App() {
     }
     // All good - load cart from localstorage
     dispatch(setCart(cart));
-  }
+  }, [dispatch]);
 
   function RouteWithSubRoutes(route) {
     return (
