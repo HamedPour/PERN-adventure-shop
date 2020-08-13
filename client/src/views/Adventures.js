@@ -51,6 +51,11 @@ function Adventures() {
   return (
     <Container>
       <Row>
+        <Col className="text-center">
+          <h1 className="display-4 m-4">Choose Your Adventure</h1>
+        </Col>
+      </Row>
+      <Row>
         {adventures.map((adventure) => {
           return (
             <Col
@@ -75,7 +80,7 @@ function Adventures() {
                   <Row className="mt-4">
                     <Col md={{ span: 6, offset: 0 }}>
                       {selected.includes(adventure.id) ? (
-                        <Button disabled="true" variant="warning">
+                        <Button disabled={true} variant="warning">
                           <img
                             alt="checkmark"
                             style={checkmarkStyle}

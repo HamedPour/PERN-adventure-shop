@@ -140,7 +140,7 @@ function Cart({ items, totalPrice }) {
           md={{ span: 6, offset: 3 }}
         >
           <hr />
-          {totalPrice < 0 ? (
+          {totalPrice > 0 ? (
             <Alert variant="info">
               <span style={totalStyle}>
                 Grand Total: £{totalPrice.toLocaleString()}*

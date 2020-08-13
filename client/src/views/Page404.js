@@ -28,7 +28,7 @@ function Page404() {
       </div>
       <br />
       <div>
-        <a style={linkStyle} href="https://hamedpour.github.com/">
+        <a style={linkStyle} href="/">
           Click here to get to safety
         </a>
       </div>

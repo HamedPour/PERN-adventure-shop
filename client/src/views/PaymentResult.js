@@ -4,16 +4,25 @@ import React, { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
+// router
+import { useHistory } from "react-router-dom";
+
 // Redux
 import { useDispatch } from "react-redux";
 import { deleteCart } from "../store/actions/cartAction";
 
 function PaymentResult(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(deleteCart());
   }, [dispatch]);
+
+  function toHomepage() {
+    console.log("click");
+    history.push("/");
+  }
 
   return (
     <Container>
@@ -30,7 +39,9 @@ function PaymentResult(props) {
           alt="Indiana Jones hat"
           src={process.env.PUBLIC_URL + "/images/hat.png"}
         />
-        <Button size="lg">HOME</Button>
+        <Button size="lg" onClick={toHomepage}>
+          HOME
+        </Button>
       </div>
       <div
         hidden={props.location.state.result === "ERROR" ? false : true}
@@ -41,7 +52,9 @@ function PaymentResult(props) {
         </h1>
         <h2>Stuff has gone terribly wrong! It was them blasted bugs!</h2>
         <br />
-        <Button size="lg">HOME</Button>
+        <Button size="lg" onClick={toHomepage}>
+          HOME
+        </Button>
       </div>
     </Container>
   );

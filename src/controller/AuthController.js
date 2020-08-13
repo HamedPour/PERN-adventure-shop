@@ -18,7 +18,7 @@ module.exports = {
       );
 
       const adventurer = DB_signup_response.rows[0];
-      return res.json({ adventurer, token });
+      return res.json({ adventurer });
     } catch (err) {
       if (
         err.message ===
@@ -29,6 +29,7 @@ module.exports = {
           errorType: "duplicateUser",
         });
       }
+      console.error(err);
       return res.status(500).json({ message: "Something went tots wrong!!" });
     }
   },

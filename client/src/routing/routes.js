@@ -15,6 +15,7 @@ export default [
     linkName: "home",
     component: Home,
     invisible: true,
+    protected: false,
     exact: true,
   },
   {
@@ -23,6 +24,7 @@ export default [
     linkName: "adventures",
     component: Adventures,
     invisible: false,
+    protected: true,
     exact: true,
   },
   {
@@ -31,6 +33,7 @@ export default [
     linkName: "sign up",
     component: SignupPage,
     invisible: false,
+    protected: false,
     exact: true,
   },
   {
@@ -39,6 +42,7 @@ export default [
     linkName: "sign in",
     component: SigninPage,
     invisible: false,
+    protected: false,
     exact: true,
   },
   {
@@ -48,6 +52,7 @@ export default [
     component: Cart,
     protected: true,
     invisible: false,
+    protected: true,
     exact: true,
   },
   {
@@ -56,6 +61,7 @@ export default [
     linkName: "payment result",
     component: PaymentResult,
     invisible: true,
+    protected: true,
     exact: true,
   },
   {
@@ -64,11 +70,13 @@ export default [
     linkName: "sign out",
     component: SignoutPage,
     invisible: false,
+    protected: true,
     exact: true,
   },
   {
     path: "*",
     invisible: true,
+    protected: false,
     component: Page404,
   },
 ];

@@ -1,1 +1,1 @@
-## PERN Adventure Shop
+## Adventure Shop (PERN)

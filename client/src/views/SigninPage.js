@@ -99,11 +99,9 @@ function SigninPage() {
       </Row>
       <Row>
         <Col xs={{ span: 8, offset: 2 }} md={{ span: 4, offset: 4 }}>
-          <h1 className="text-center" style={verticalSpacer}>
+          <h1 className="text-center " style={verticalSpacer}>
             Sign In
           </h1>
-          <h1 className="text-center">test@test.com</h1>
-          <h1 className="text-center">12345678</h1>
           <Form onSubmit={handleSignIn}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
@@ -127,6 +125,21 @@ function SigninPage() {
               Sign In
             </Button>
           </Form>
+        </Col>
+      </Row>
+      <Row>
+        <Col
+          xs={{ span: 8, offset: 2 }}
+          md={{ span: 4, offset: 4 }}
+          className="text-center lead mt-4"
+        >
+          <Alert variant="info">
+            Dear Adventurer,
+            <br /> You can use the guest account below if you're lazy.
+            <br />
+            <hr />
+            guest@guest.com <br /> 12345678
+          </Alert>
         </Col>
       </Row>
     </Container>

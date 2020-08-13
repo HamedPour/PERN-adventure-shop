@@ -106,9 +106,6 @@ function SignupPage() {
             Sign Up
           </h1>
 
-          <h1 className="text-center" style={verticalSpacer}>
-            12345678
-          </h1>
           <Modal show={showModal} backdrop="static" keyboard={false}>
             <Modal.Body>
               <div
