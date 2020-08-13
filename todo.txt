@@ -36,4 +36,12 @@ What do you need to do?
 - style cart page                                 [x]
 - connect embark to cart                          [x]
 - create cart related Redux components            [x]
-- Associate User with Cart in localStorage        []
+- Associate User with Cart in localStorage        [x]
+
+## Paypal checkout
+- Setup Paypal SDK                                [x]
+- connected SDK to cart                           [x]
+- setup users access and conduct testing          [x]
+
+## React Client side route guards
+- This is going to be painful!!

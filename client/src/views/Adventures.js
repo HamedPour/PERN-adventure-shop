@@ -20,10 +20,15 @@ const priceStyle = {
   minWidth: "100px",
 };
 
+const checkmarkStyle = {
+  width: "20px",
+};
+
 function Adventures() {
   const dispatch = useDispatch();
   const adventurer = useSelector((state) => state.adventurer);
   const [adventures, setAdventures] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   async function getAdventures() {
     const adventureList = await AdventureServices.index();
@@ -31,6 +36,9 @@ function Adventures() {
   }
 
   function handleEmbarkClick(adventure) {
+    const aList = [...selected];
+    aList.push(adventure.id);
+    setSelected(aList);
     // send the adventure and the user(adventurer) to actions
     // Note, adventurer might be an empty obj allow it to pass
     dispatch(addToCart(adventure, adventurer));
@@ -65,15 +73,29 @@ function Adventures() {
                     {adventure.description}
                   </Card.Text>
                   <Row className="mt-4">
-                    <Col md={{ span: 4, offset: 0 }}>
-                      <Button
-                        onClick={() => handleEmbarkClick(adventure)}
-                        variant="primary"
-                      >
-                        Embark
-                      </Button>
+                    <Col md={{ span: 6, offset: 0 }}>
+                      {selected.includes(adventure.id) ? (
+                        <Button disabled="true" variant="warning">
+                          <img
+                            alt="checkmark"
+                            style={checkmarkStyle}
+                            src={
+                              process.env.PUBLIC_URL +
+                              "images/icons/checked.png"
+                            }
+                          />{" "}
+                          In Cart
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => handleEmbarkClick(adventure)}
+                          variant="primary"
+                        >
+                          Embark
+                        </Button>
+                      )}
                     </Col>
-                    <Col md={{ span: 4, offset: 4 }}>
+                    <Col md={{ span: 2, offset: 2 }}>
                       <div style={priceStyle} className="text-align-right">
                         <span>£{adventure.price.toLocaleString()}</span>
                       </div>

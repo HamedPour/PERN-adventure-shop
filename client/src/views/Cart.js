@@ -140,17 +140,26 @@ function Cart({ items, totalPrice }) {
           md={{ span: 6, offset: 3 }}
         >
           <hr />
-          <Alert variant="info">
-            <span style={totalStyle}>
-              Grand Total: £{totalPrice.toLocaleString()}*
-            </span>
-            <br />
-            <small>
-              * super special discount coz you need an adventure in your life
-            </small>
-          </Alert>
-          <div style={headline}>Payment Methods</div>
-          <div style={paypayBtnStyle} ref={(v) => (paypalRef = v)} />
+          {totalPrice < 0 ? (
+            <Alert variant="info">
+              <span style={totalStyle}>
+                Grand Total: £{totalPrice.toLocaleString()}*
+              </span>
+              <br />
+              <small>
+                * super special discount coz you need an adventure in your life
+              </small>
+            </Alert>
+          ) : (
+            <Alert variant="info">
+              {" "}
+              <span style={totalStyle}>Cart is Empty</span>
+            </Alert>
+          )}
+          <div hidden={totalPrice > 0 ? false : true}>
+            <div style={headline}>Payment Methods</div>
+            <div style={paypayBtnStyle} ref={(v) => (paypalRef = v)} />
+          </div>
         </Col>
       </Row>
       <Row hidden={!isLoading}>
