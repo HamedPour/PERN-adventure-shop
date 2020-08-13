@@ -14,8 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 if (process.env.NODE_ENV === "production") {
-  // serve static content
-  console.log("PRODUCTION HERE ... ");
+  // serve static content when in production
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
 

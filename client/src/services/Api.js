@@ -2,7 +2,7 @@
 import axois from "axios";
 
 const devURL = "http://localhost:5000/";
-const proURL = "";
+const proURL = "https://adventure-shop.herokuapp.com/";
 let baseURL = "";
 
 if (process.env.NODE_ENV === "production") {
