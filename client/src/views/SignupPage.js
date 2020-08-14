@@ -22,6 +22,9 @@ const alertStyling = {
   textAlign: "center",
   fontSize: "1.2rem",
   position: "absolute",
+  left: "0",
+  right: "0",
+  margin: "0 auto",
 };
 
 function SignupPage() {
