@@ -6,8 +6,10 @@ const isAuthorised = require("./policies/isAuthorised");
 const AuthController = require("./controller/AuthController");
 const AuthControllerPolicy = require("./policies/AuthControllerPolicy");
 const AdventuresController = require("./controller/AdventuresController");
+const LandingController = require("./controller/LandingController");
 
 module.exports = (app) => {
+  app.get("/", LandingController.welcome);
   app.post("/signup", AuthControllerPolicy.signup, AuthController.signup);
   app.post("/signin", AuthController.signin);
   app.get("/adventures", AdventuresController.index);
