@@ -47,7 +47,7 @@ function HomePage() {
         </Col>
         <Col>
           <Button variant="warning" size="lg" onClick={saidNo}>
-            Hell No! <br /> Adventuring is dangerious!{" "}
+            Hell No! <br /> Adventuring is dangerous!{" "}
           </Button>
         </Col>
       </Row>

@@ -32,10 +32,10 @@ CREATE INDEX "IDX_session_expire" ON "session" ("expire");
 
 --populat
 
-INSERT INTO adventures (name, description, price) VALUES ('Lost City of X','Embark on a breathtaking journey to find the lost city of X. Solve your way through its labyrinthic gates to discover the ancient civilisation within.f',400000);
+INSERT INTO adventures (name, description, price) VALUES ('Lost City of X','Embark on a breathtaking journey to find the Lost City of X. Solve your way through its labyrinthic puzzles to discover the ancient civilisation within.',400000);
 
-INSERT INTO adventures (name, description, price) VALUES ('Forgotten Temple','Track through deep snow and freezing landscapes to unearth a forgotten temple deep in the mountains. Wonders await for those who can uncover its secrets.s',700000);
+INSERT INTO adventures (name, description, price) VALUES ('Forgotten Temple','Track through deep snow and freezing landscapes to unearth a forgotten temple deep in the mountains. Wonders await for those who can uncover its secrets.',700000);
 
-INSERT INTO adventures (name, description, price) VALUES ('Treasure Hunt','Race against time and foe to unveil hidden clues scattered around the world in a search to discover the greatest pirate treasure of all time.',800000);
+INSERT INTO adventures (name, description, price) VALUES ('Treasure Hunt','Race against time and foes to unveil hidden clues scattered around the world in a search to discover the greatest pirate treasure of all time.',800000);
 
-INSERT INTO adventures (name, description, price) VALUES ('Jurassic Isles',' Lost in a lush and treacherous rain forest, with limited supplies, you must fight to reach your only hope of escape - the last helipad.',900000);
+INSERT INTO adventures (name, description, price) VALUES ('Jurassic Isles','Lost in a lush and treacherous rain forest, with limited supplies, you must fight to reach your only hope of escape - the last helipad.',900000);
