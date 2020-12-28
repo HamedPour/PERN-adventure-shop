@@ -50,7 +50,6 @@ export default [
     name: "cart",
     linkName: "Cart",
     component: Cart,
-    protected: true,
     invisible: false,
     protected: true,
     exact: true,
